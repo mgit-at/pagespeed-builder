@@ -1,0 +1,7 @@
+432a433,438
+> 
+> Package: libnginx-mod-pagespeed
+> Architecture: any
+> Depends: ${misc:Depends}, ${shlibs:Depends}
+> Description: Pagespeed for NGINX
+>   Google Pagespeed for nginx
