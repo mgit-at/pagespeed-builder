@@ -1,4 +1,4 @@
-FROM debian:stretch
+FROM <CHANGEME>
 MAINTAINER David Kainz "dkainz@mgit.at"
 
 RUN sed 's/deb /deb-src /g' /etc/apt/sources.list > /etc/apt/sources.list.d/deb-src.list

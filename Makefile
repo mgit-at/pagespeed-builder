@@ -1,3 +1,5 @@
+DISTRO := debian
+CODENAME := stretch
 VERSION := 1.13.35.1-beta
 
 .PHONY: image build
@@ -5,8 +7,9 @@ VERSION := 1.13.35.1-beta
 all: image build
 
 image:
-	@sudo docker build -t mgit/pagespeed-builder .
+	@sed 's/^FROM.*/FROM $(DISTRO):$(CODENAME)/' Dockerfile > "Dockerfile.$(DISTRO)-$(CODENAME)"
+	@sudo docker build -f "Dockerfile.$(DISTRO)-$(CODENAME)" -t "mgit/pagespeed-builder:$(DISTRO)-$(CODENAME)" .
 
 build:
-	@mkdir -p "build/$(VERSION)"
-	@sudo docker run --rm -v "$(CURDIR)/build/$(VERSION):/srv/build" mgit/pagespeed-builder "$(VERSION)"
+	@mkdir -p "build/$(VERSION)/$(DISTRO)/$(CODENAME)"
+	@sudo docker run --rm -v "$(CURDIR)/build/$(VERSION)/$(DISTRO)/$(CODENAME):/srv/build" "mgit/pagespeed-builder:$(DISTRO)-$(CODENAME)" "$(VERSION)"
