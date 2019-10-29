@@ -8,9 +8,11 @@ RUN apt-get -y update && apt-get -y install \
     build-essential wget unzip uuid-dev
 
 RUN apt-get -y build-dep nginx
-RUN useradd -u 1000 -m builder
+RUN adduser --uid 1000 --home /srv/build builder
 
-USER root
+COPY ./build-pagespeed.sh /srv/build-pagespeed.sh
+COPY ./files /srv/files
 
-COPY ./build-pagespeed.sh /home/builder/build-pagespeed.sh
-COPY ./patches /home/builder/patches
+ENTRYPOINT /srv/build-pagespeed.sh
+VOLUME /srv/build
+USER builder
