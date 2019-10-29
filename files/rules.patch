@@ -1,0 +1,19 @@
+diff -ur nginx-1.14.2.orig/debian/rules nginx-1.14.2/debian/rules
+--- nginx-1.14.2.orig/debian/rules	2019-08-13 20:10:28.000000000 +0200
++++ nginx-1.14.2/debian/rules	2019-10-29 17:25:21.545511129 +0100
+@@ -7,6 +7,7 @@
+ 
+ FLAVOURS := full light extras
+ DYN_MODS := \
++	pagespeed \
+ 	http-auth-pam \
+ 	http-cache-purge \
+ 	http-dav-ext \
+@@ -82,6 +83,7 @@
+ 			--without-http_referer_module \
+ 			--without-http_split_clients_module \
+ 			--without-http_userid_module \
++			--add-dynamic-module=$(MODULESDIR)/pagespeed \
+ 			--add-dynamic-module=$(MODULESDIR)/http-echo
+ 
+ full_configure_flags := \

@@ -41,6 +41,7 @@ cd $ngx_dir
 echo "debian/modules/pagespeed/psol/lib/Release/linux/x64/pagespeed_js_minify" > debian/source/include-binaries
 echo "load_module modules/ngx_pagespeed.so;" > debian/libnginx-mod.conf/mod-pagespeed.conf
 cp "$FILESDIR/libnginx-mod-pagespeed.nginx" debian/
-patch -p1 < "$FILESDIR/debian.patch"
+cat "$FILESDIR/control.snippet" >> debian/control
+patch -p1 < "$FILESDIR/rules.patch"
 
 exec dpkg-buildpackage
