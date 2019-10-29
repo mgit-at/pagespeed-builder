@@ -1,15 +1,16 @@
-#!/usr/bin/env bash
+#!/bin/bash
+
+NPS_VERSION="$1"
+if [ -z "$NPS_VERSION" ]; then
+    echo "Usage: $0 <pagespeed-version>"
+    exit 1
+fi
+
 set -x -e -u
 shopt -s extglob
 
 BASEDIR=$(pwd)
 FILESDIR=$(realpath "${BASH_SOURCE%/*}/files")
-NPS_VERSION=$1
-
-if [ -z "$NPS_VERSION" ]; then
-    echo "Usage: $0 <pagespeed-version>" # e.g. 1.13.35.1-beta
-    exit 1
-fi
 
 # Get nginx pagespeed
 cd $BASEDIR
@@ -35,12 +36,11 @@ rm "$nps_dir"/*.tar.gz
 cp -r "$nps_dir"/* "$ngx_dir/debian/modules/pagespeed"
 
 # Prepare nginx source for compilation with pagespeed
-echo "debian/modules/pagespeed/psol/lib/Release/linux/x64/pagespeed_js_minify" > "$ngx_dir/debian/source/include-binaries"
-echo "load_module modules/ngx_pagespeed.so;" > "$ngx_dir/debian/libnginx-mod.conf/mod-pagespeed.conf"
-patch "$ngx_dir/debian/rules" < "$FILESDIR/rules.patch"
-patch "$ngx_dir/debian/control" < "$FILESDIR/control.patch"
-cp "$FILESDIR/libnginx-mod-pagespeed.nginx" "$ngx_dir/debian/"
-
 cd $ngx_dir
+
+echo "debian/modules/pagespeed/psol/lib/Release/linux/x64/pagespeed_js_minify" > debian/source/include-binaries
+echo "load_module modules/ngx_pagespeed.so;" > debian/libnginx-mod.conf/mod-pagespeed.conf
+cp "$FILESDIR/libnginx-mod-pagespeed.nginx" debian/
+patch -p1 < "$FILESDIR/debian.patch"
 
 exec dpkg-buildpackage

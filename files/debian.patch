@@ -1,0 +1,36 @@
+diff -ur nginx-1.10.3.orig/debian/control nginx-1.10.3/debian/control
+--- nginx-1.10.3.orig/debian/control	2019-10-29 16:01:35.018525282 +0100
++++ nginx-1.10.3/debian/control	2019-10-29 16:04:47.749357698 +0100
+@@ -382,3 +382,9 @@
+  WebDAV support.
+  .
+  WebDAV Ext provides the missing PROPFIND & OPTIONS methods.
++
++Package: libnginx-mod-pagespeed
++Architecture: any
++Depends: ${misc:Depends}, ${shlibs:Depends}
++Description: Pagespeed for NGINX
++  Google Pagespeed for nginx
+diff -ur nginx-1.10.3.orig/debian/rules nginx-1.10.3/debian/rules
+--- nginx-1.10.3.orig/debian/rules	2019-10-29 16:01:35.022525257 +0100
++++ nginx-1.10.3/debian/rules	2019-10-29 16:06:54.432588640 +0100
+@@ -29,7 +29,8 @@
+ 	http-xslt-filter \
+ 	mail \
+ 	nchan \
+-	stream
++	stream \
++	pagespeed
+ 
+ MODULESDIR = $(CURDIR)/debian/modules
+ BASEDIR = $(CURDIR)
+@@ -137,7 +138,8 @@
+ 			--add-dynamic-module=$(MODULESDIR)/nginx-lua \
+ 			--add-dynamic-module=$(MODULESDIR)/nginx-upload-progress \
+ 			--add-dynamic-module=$(MODULESDIR)/nginx-upstream-fair \
+-			--add-dynamic-module=$(MODULESDIR)/ngx_http_substitutions_filter_module
++			--add-dynamic-module=$(MODULESDIR)/ngx_http_substitutions_filter_module \
++			--add-dynamic-module=$(MODULESDIR)/pagespeed
+ 
+ %:
+ 	dh $@ --with systemd
