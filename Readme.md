@@ -6,7 +6,7 @@ Script / Dockerfile for building a debian package containing [google pagespeed](
 
 For debian stretch:
 
-`git clone git@github.com:mgit-at/pagespeed-builder.git`  
+`git clone https://github.com/mgit-at/pagespeed-builder.git`  
 `cd pagespeed-builder && make`  
 
 For building pagespeed with other versions of debian / nginx change the
