@@ -4,15 +4,15 @@ Script / Dockerfile for building a debian package containing [google pagespeed](
 
 # Build
 
-For debian stretch:
+For debian/buster:
 
 ```
 git clone https://github.com/mgit-at/pagespeed-builder.git
 cd pagespeed-builder && make DISTRO=debian CODENAME=buster
 ```
 
-If you want an other version of pagepeed adjust the `VERSION` variable in the Makefile.
-You may as well pass the VERSION veriable when calling make:
+If you want another version of pagepeed adjust the `VERSION` variable in the Makefile.
+You may as well pass the variable when calling make:
 
 ```
 make DISTRO=ubuntu CODENAME=bionic VERSION=1.2.3
