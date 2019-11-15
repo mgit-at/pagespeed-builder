@@ -42,6 +42,7 @@ echo "debian/modules/pagespeed/psol/lib/Release/linux/x64/pagespeed_js_minify" >
 echo "load_module modules/ngx_pagespeed.so;" > debian/libnginx-mod.conf/mod-pagespeed.conf
 cp "$FILESDIR/libnginx-mod-pagespeed.nginx" debian/
 cat "$FILESDIR/control.snippet" >> debian/control
-patch -p1 < "$FILESDIR/rules.patch"
+sed 's#DYN_MODS := #DYN_MODS := pagespeed #' -i debian/rules
+sed 's#light_configure_flags := #light_configure_flags := --add-dynamic-module=$(MODULESDIR)/pagespeed #' -i debian/rules
 
 exec dpkg-buildpackage
