@@ -1,6 +1,6 @@
 DISTRO := debian
-CODENAME := stretch
-VERSION := 1.13.35.1-beta
+CODENAME := buster
+VERSION := 1.13.35.2-stable
 
 .PHONY: image build
 
